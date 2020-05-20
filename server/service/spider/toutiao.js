@@ -11,7 +11,8 @@ const fn = async() => {
       ret.push({
         title: item.title,
         url: `https://www.toutiao.com${item.source_url}`,
-        cover: item.image_url && item.image_url.substring(2)
+        cover: item.image_url && item.image_url.substring(2),
+        info_from: 'toutiao'
       })
     })
   }

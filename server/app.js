@@ -12,9 +12,5 @@ app.use(async ctx => {
   ctx.body = 'hello world'
 })
 
-schedule.scheduleJob('*/3 * * * * *', () => {
-  console.log(14124421);
-})
-
 app.listen(port)
 console.log(`your server is deployed on ${port}`);

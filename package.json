@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./server/app.js",
-    "spider": "node ./server/service/spider/index"
+    "spider": "node ./server/service/spider/index",
+    "db": "node ./server/db/index"
   },
   "author": "",
   "license": "ISC",

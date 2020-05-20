@@ -17,7 +17,8 @@ const fn = async () => {
     $('.topic').each((idx, item) => {
       ret.push({
         title: $(item).text(),
-        url: `'https://bbs.nga.cn${$(item).attr('href')}`
+        url: `'https://bbs.nga.cn${$(item).attr('href')}`,
+        info_from: 'nga'
       })
     })
   }

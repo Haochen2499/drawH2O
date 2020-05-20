@@ -13,10 +13,11 @@ const fn = async () => {
     ret.push({
       title: $(item).find('.HotItem-title').text(),
       cover: $(item).find('.HotItem-img img').attr('src'),
-      url: $(item).find('.HotItem-content a').attr('href')
+      url: $(item).find('.HotItem-content a').attr('href'),
+      info_from: 'zhihu'
     })
   })
-  console.log(ret);
+  // console.log(ret);
   return ret
 }
 module.exports = fn
