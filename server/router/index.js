@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const fs = require('fs')
-// const resp = require('../utils/response')
+const spider = require('../db/model/spider')
+const resp = require('../utils/response')
 
 const render = async path => {
   return new Promise((res, rej) => {
@@ -25,9 +26,15 @@ const api = new Router()
 api.get('/', ctx => {
   ctx.body = resp.res({name: 'hhc'})
 })
-api.get('/info', ctx => {
-  const {query} = ctx
-  ctx.body = resp.res(query)
+api.get('/info/get_list', async ctx => {
+  const {type} = ctx.query
+  let res
+  if (type) {
+    res = await spider.getListBy(type)
+  } else {
+    res = await spider.getList()
+  }
+  ctx.body = resp.res(res)
 })
 api.get('/error', ctx => {
   ctx.body = resp.error()

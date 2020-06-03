@@ -12,7 +12,7 @@ const fn = async () => {
   $('.HotItem').each((idx, item) => {
     ret.push({
       title: $(item).find('.HotItem-title').text(),
-      cover: $(item).find('.HotItem-img img').attr('src'),
+      cover_url: $(item).find('.HotItem-img img').attr('src'),
       url: $(item).find('.HotItem-content a').attr('href'),
       info_from: 'zhihu'
     })
