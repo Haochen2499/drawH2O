@@ -8,12 +8,14 @@ const spider = {
   getListBy: async (type) => {
     console.log(type);
     const res = await db.query(
-      `SELECT * FROM spider_info where info_from = '${type}'`
+      `SELECT * FROM spider_info where info_from = '${type}' order by create_time desc`
     );
     return res.map((item) => new spiderItem(item));
   },
   getList: async () => {
-    const res = await db.query(`SELECT * FROM spider_info`);
+    const res = await db.query(
+      `SELECT * FROM spider_info order by create_time desc`
+    );
     return res.map((item) => new spiderItem(item));
   },
   addList: async (data) => {
@@ -34,6 +36,7 @@ class spiderItem {
     this.title = data.title;
     this.type = data.info_from;
     this.url = data.url;
+    this.create_time = data.create_time;
   }
 }
 

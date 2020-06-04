@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server/app.js",
-    "spider": "node ./server/service/spider/index",
+    "start": "nodemon ./server/app.js",
+    "spider": "node ./server/service/spider/index -t",
+    "spider-test": "node ./server/service/spider/xiachufang -t",
     "db": "node ./server/db/index",
     "test": "node ./server/test -d -s -p spicy -f aaaa"
   },

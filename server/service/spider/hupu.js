@@ -1,18 +1,18 @@
-const catcher = require('./catcher')
+const catcher = require("./catcher");
 
-const fn = async () => {
-  const ret = []
-  const $ = await catcher('https://bbs.hupu.com/all-gambia')
+const hupu = async () => {
+  const ret = [];
+  const $ = await catcher("https://bbs.hupu.com/all-gambia");
   if ($) {
-    $('.textSpan a').each((idx, item) => {
+    $(".textSpan a").each((idx, item) => {
       ret.push({
-        url: `https://bbs.hupu.com${$(item).attr('href')}`,
-        title: $(item).children('span').text(),
-        info_from: 'hupu'
-      })
-    })
+        url: `https://bbs.hupu.com${$(item).attr("href")}`,
+        title: $(item).children("span").text(),
+        info_from: "hupu",
+      });
+    });
   }
-  return ret
-}
+  return ret;
+};
 
-module.exports = fn
+module.exports = hupu;

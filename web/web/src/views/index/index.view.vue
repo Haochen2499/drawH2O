@@ -20,8 +20,17 @@
             v-for="item in list"
             :key="item.url"
           >
-            <img v-if="item.cover_url" :src="item.cover_url" />
-            <a :href="item.url" target="_blank">{{ item.title }}</a>
+            <div class="left">
+              <img
+                v-if="item.cover_url"
+                :src="item.cover_url"
+                :onerror="toCDN(item.cover_url)"
+              />
+              <a :href="item.url" target="_blank">{{ item.title }}</a>
+            </div>
+            <div class="right">
+              <span>{{ timeParser(item.create_time) }}</span>
+            </div>
           </div>
         </div>
       </Scroll>
@@ -33,6 +42,7 @@
 import { INFO_TYPE } from "@/config";
 import fetch from "@utils/fetch";
 import { Scroll } from "view-design";
+import timeParser from "@utils/timeParser";
 export default {
   name: "Index",
   components: { Scroll },
@@ -59,6 +69,10 @@ export default {
       if (res.error_code === 0) {
         this.list = res.data;
       }
+    },
+    timeParser,
+    toCDN(url) {
+      return `this.src = 'https://images.weserv.nl/?url=${url}'`;
     },
   },
 };
@@ -107,8 +121,20 @@ export default {
         padding: 15px;
         margin-bottom: 10px;
         display: flex;
+        justify-content: space-between;
         a {
           color: #333;
+        }
+        .left {
+          display: flex;
+        }
+        .right {
+          display: flex;
+          flex-shrink: 0;
+          span {
+            font-size: 12px;
+            color: #999;
+          }
         }
       }
       .img-list {

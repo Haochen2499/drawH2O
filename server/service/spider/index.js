@@ -1,26 +1,42 @@
-const hupuSpider = require('./hupu')
-const toutiaoSpider = require('./toutiao')
-const ngaSpider = require('./nga')
-const zhihuSpider = require('./zhihu')
-const spiderModal = require('../../db/model/spider')
+const hupu = require("./hupu");
+const toutiao = require("./toutiao");
+const nga = require("./nga");
+const zhihu = require("./zhihu");
+const smzdm = require("./smzdm");
+const weibo = require("./weibo");
+const xiachufang = require("./xiachufang");
+const spiderModal = require("../../db/model/spider");
 
 const fn = async () => {
-  console.time('spiderAll')
-  const [hupuRes, toutiaoRes, ngaRes, zhihuRes] = await Promise.all([
-    hupuSpider(),
-    toutiaoSpider(),
-    ngaSpider(),
-    zhihuSpider(),
-  ])
-  console.timeEnd('spiderAll')
-  console.log(`获取虎扑条数: ${hupuRes.length}`);
-  console.log(`获取头条条数: ${toutiaoRes.length}`);
-  console.log(`获取NGA条数: ${ngaRes.length}`);
-  console.log(`获取知乎条数: ${zhihuRes.length}`);
-  console.time('insert db')
-  await spiderModal.addList([...hupuRes, ...toutiaoRes, ...ngaRes, ...zhihuRes])
-  console.timeEnd('insert db')
-}
+  console.time("spiderAll");
+  const resultList = [];
+  const spiderList = [hupu, toutiao, nga, zhihu, smzdm, weibo, xiachufang];
+  console.time("spiderAll");
+  spiderList.forEach(async (task) => {
+    let res = await task();
+    resultList.push(res);
+    console.log(`获取${task.name}条数：${res.length}`);
+    if (resultList.length === spiderList.length) {
+      console.timeEnd("spiderAll");
+      saveToDB(resultList);
+    }
+  });
+};
 
-fn()
-module.export = fn
+const saveToDB = async (data) => {
+  console.time("insert db");
+  let done = 0;
+  data.forEach(async (item) => {
+    await spiderModal.addList(item);
+    done++;
+    if (done === data.length) {
+      console.timeEnd("insert db");
+    }
+  });
+};
+
+if (process.argv.indexOf("-t") !== -1) {
+  console.log("isTest");
+  fn();
+}
+module.export = fn;
