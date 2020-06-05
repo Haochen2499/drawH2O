@@ -7,6 +7,9 @@ const weibo = require("./weibo");
 const xiachufang = require("./xiachufang");
 const spiderModal = require("../../db/model/spider");
 
+const NewsDao = require("../../dao/news");
+
+console.log("dao", NewsDao.create);
 const fn = async () => {
   console.time("spiderAll");
   const resultList = [];
@@ -25,14 +28,16 @@ const fn = async () => {
 
 const saveToDB = async (data) => {
   console.time("insert db");
-  let done = 0;
-  data.forEach(async (item) => {
-    await spiderModal.addList(item);
-    done++;
-    if (done === data.length) {
-      console.timeEnd("insert db");
-    }
-  });
+  // let done = 0;
+  // data.forEach(async (item) => {
+  //   await spiderModal.addList(item);
+  //   done++;
+  //   if (done === data.length) {
+  //     console.timeEnd("insert db");
+  //   }
+  // });
+  await NewsDao.create(data);
+  console.time("insert db");
 };
 
 if (process.argv.indexOf("-t") !== -1) {
