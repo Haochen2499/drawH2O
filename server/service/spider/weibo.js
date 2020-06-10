@@ -1,5 +1,4 @@
 const cheerio = require("cheerio");
-// const fs = require("fs");
 const fetch = require("../../utils/fetch");
 
 const weibo = async () => {
@@ -14,7 +13,7 @@ const weibo = async () => {
     ret.push({
       title: $(item).find("a").text(),
       url: `https://s.weibo.com${$(item).find("a").attr("href")}`,
-      info_from: "weibo",
+      infoFrom: "weibo",
     });
   });
   return ret;

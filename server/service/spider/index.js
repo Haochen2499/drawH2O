@@ -5,16 +5,12 @@ const zhihu = require("./zhihu");
 const smzdm = require("./smzdm");
 const weibo = require("./weibo");
 const xiachufang = require("./xiachufang");
-const spiderModal = require("../../db/model/spider");
-
 const NewsDao = require("../../dao/news");
 
-console.log("dao", NewsDao.create);
 const fn = async () => {
   console.time("spiderAll");
   const resultList = [];
-  const spiderList = [hupu, toutiao, nga, zhihu, smzdm, weibo, xiachufang];
-  console.time("spiderAll");
+  const spiderList = [hupu, toutiao, nga, zhihu, weibo, xiachufang, smzdm];
   spiderList.forEach(async (task) => {
     let res = await task();
     resultList.push(res);
@@ -28,20 +24,18 @@ const fn = async () => {
 
 const saveToDB = async (data) => {
   console.time("insert db");
-  // let done = 0;
-  // data.forEach(async (item) => {
-  //   await spiderModal.addList(item);
-  //   done++;
-  //   if (done === data.length) {
-  //     console.timeEnd("insert db");
-  //   }
-  // });
-  await NewsDao.create(data);
-  console.time("insert db");
+  let done = 0;
+  data.forEach(async (item) => {
+    await NewsDao.create(item);
+    done++;
+    if (done === data.length) {
+      console.timeEnd("insert db");
+    }
+  });
 };
 
 if (process.argv.indexOf("-t") !== -1) {
   console.log("isTest");
   fn();
 }
-module.export = fn;
+module.exports = fn;

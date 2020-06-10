@@ -1,0 +1,10 @@
+GET http://localhost:9527/api/info?name=hhc HTTP/1.1
+
+###
+
+POST http://localhost:9527/api/post_obj HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "hhc"
+}

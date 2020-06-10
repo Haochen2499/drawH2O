@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
 const fetch = require("../../utils/fetch");
+const imageStorage = require("../../utils/imageStorage");
 
 const xiachufang = async () => {
   const urls = [
@@ -9,28 +10,26 @@ const xiachufang = async () => {
   ];
   let pages = await Promise.all(urls.map((item) => fetch.get(item)));
   let ret = [];
+  let imgTask = [];
   pages.forEach((page) => {
     const data = page.data;
     const $ = cheerio.load(data);
     $(".recipe").each((idx, item) => {
+      const imgUrl = $(item).find(".cover img").attr("data-src");
       ret.push({
         title: $(item).find(".info .name a").text().replace(/\n/g, "").trim(),
         url: `http://www.xiachufang.com${$(item)
           .find(".info .name a")
           .attr("href")}`,
-        cover_url: $(item).find(".cover img").attr("data-src"),
-        info_from: "xiachufang",
+        infoFrom: "xiachufang",
       });
-      // console.log(
-      //   $(item).find(".info .name a").text().replace(/\n/g, "").trim()
-      // );
+      imgTask.push(imgUrl ? imageStorage(imgUrl) : null);
     });
   });
-  // return ret;
+  let imgRes = await Promise.all(imgTask);
+  imgRes.forEach((item, index) => {
+    ret[index].cover_url = item;
+  });
   return ret;
 };
-if (process.argv.indexOf("-t") !== -1) {
-  console.log("isTest");
-  xiachufang();
-}
 module.exports = xiachufang;

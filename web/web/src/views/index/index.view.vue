@@ -12,7 +12,7 @@
           <p>{{ item.name }}</p>
         </div>
       </div>
-      <Scroll class="scroller" height="700">
+      <Scroll class="scroller" height="700" :on-reach-bottom="getMoreList">
         <div class="list-wrap">
           <div
             class="list-item"
@@ -21,15 +21,11 @@
             :key="item.url"
           >
             <div class="left">
-              <img
-                v-if="item.cover_url"
-                :src="item.cover_url"
-                :onerror="toCDN(item.cover_url)"
-              />
+              <img v-if="item.cover_url" :src="imgUrl(item.cover_url)" />
               <a :href="item.url" target="_blank">{{ item.title }}</a>
             </div>
             <div class="right">
-              <span>{{ timeParser(item.create_time) }}</span>
+              <span>{{ timeParser(item.createdAt) }}</span>
             </div>
           </div>
         </div>
@@ -52,6 +48,8 @@ export default {
       currentType: INFO_TYPE[0].type,
       list: [],
       page: 1,
+      count: 0,
+      loading: false
     };
   },
   created() {
@@ -63,18 +61,52 @@ export default {
       this.getList();
     },
     async getList(isLoadingMore) {
+      if (this.loading) {
+        return;
+      }
+      if (isLoadingMore) {
+        this.page++;
+      } else {
+        this.page = 1;
+      }
+      this.loading = true;
       let res = await fetch.get("/api/info/get_list", {
         type: this.currentType,
+        page: this.page
       });
+      this.loading = false;
       if (res.error_code === 0) {
-        this.list = res.data;
+        const newData = res.data.list;
+        if (isLoadingMore) {
+          this.list = [...this.list, ...newData];
+          console.log(this.list);
+        } else {
+          this.list = newData;
+          this.count = res.data.count;
+        }
       }
+    },
+    async getMoreList() {
+      return new Promise(async resolve => {
+        if (this.list.length === this.count) {
+          console.log("no more");
+          resolve();
+          return;
+        }
+        await this.getList(true);
+        resolve();
+      });
     },
     timeParser,
     toCDN(url) {
       return `this.src = 'https://images.weserv.nl/?url=${url}'`;
     },
-  },
+    imgUrl(url) {
+      const host =
+        process.env.NODE_ENV === "development" ? "http://localhost:9527" : "";
+      return host + url;
+    }
+  }
 };
 </script>
 

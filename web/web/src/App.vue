@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-import fetch from "./utils/fetch";
 import { Layout, Menu, MenuItem } from "view-design";
 
 export default {
@@ -41,20 +39,20 @@ export default {
   components: {
     Layout,
     Menu,
-    MenuItem,
+    MenuItem
   },
   data() {
     return {
       isShow: true,
-      activeMenu: 1,
+      activeMenu: 1
     };
   },
-  async created() {},
+  created() {},
   methods: {
     handleSelectMenu(val) {
       console.log(val);
-    },
-  },
+    }
+  }
 };
 </script>
 

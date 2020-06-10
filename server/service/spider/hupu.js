@@ -8,7 +8,7 @@ const hupu = async () => {
       ret.push({
         url: `https://bbs.hupu.com${$(item).attr("href")}`,
         title: $(item).children("span").text(),
-        info_from: "hupu",
+        infoFrom: "hupu",
       });
     });
   }

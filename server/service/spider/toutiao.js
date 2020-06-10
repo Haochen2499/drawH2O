@@ -1,5 +1,6 @@
 const fetch = require("../../utils/fetch");
 const _ = require("lodash");
+const imageStorage = require("../../utils/imageStorage");
 
 const toutiao = async () => {
   const url =
@@ -8,13 +9,20 @@ const toutiao = async () => {
   const res = await fetch.get(url);
   const data = res.data.data;
   if (data) {
+    let imgTask = [];
     _.forEach(data, (item) => {
       ret.push({
         title: item.title,
         url: `https://www.toutiao.com${item.source_url}`,
-        cover_url: item.image_url && `https:${item.image_url}`,
-        info_from: "toutiao",
+        infoFrom: "toutiao",
       });
+      imgTask.push(
+        item.image_url ? imageStorage(`https:${item.image_url}`) : null
+      );
+    });
+    let imgRes = await Promise.all(imgTask);
+    imgRes.forEach((item, index) => {
+      ret[index].cover_url = item;
     });
   }
   return ret;
