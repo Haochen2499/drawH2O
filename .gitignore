@@ -1,6 +1,6 @@
 node_modules
 
-/server/static/spider-img
+spider-img/
 
 yarn-error.log
 .DS_Store
