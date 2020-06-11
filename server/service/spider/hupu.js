@@ -7,7 +7,6 @@ const hupu = async () => {
   if (res.data) {
     const $ = await cheerio.load(res.data);
     $(".textSpan a").each((idx, item) => {
-      console.log(item, idx);
       ret.push({
         url: `https://bbs.hupu.com${$(item).attr("href")}`,
         title: $(item).children("span").text(),
