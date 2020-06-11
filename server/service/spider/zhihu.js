@@ -10,7 +10,6 @@ const zhihu = async () => {
   let res = await timeoutPromise(
     fetch.get("https://www.zhihu.com/hot", null, { cookie })
   );
-  console.log(res);
   let ret = [];
   if (res) {
     const imgTask = [];

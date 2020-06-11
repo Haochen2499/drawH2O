@@ -6,6 +6,7 @@ const smzdm = require("./smzdm");
 const weibo = require("./weibo");
 const xiachufang = require("./xiachufang");
 const NewsDao = require("../../dao/news");
+const _ = require("lodash");
 
 const fn = async () => {
   console.time("spiderAll");
@@ -17,13 +18,14 @@ const fn = async () => {
     console.log(`获取${task.name}条数：${res.length}`);
     if (resultList.length === spiderList.length) {
       console.timeEnd("spiderAll");
-      saveToDB(resultList);
+      saveToDB(_.filter(resultList, (item) => item.length));
     }
   });
 };
 
 const saveToDB = async (data) => {
   console.log("start dbing");
+  console.time("insert db");
   let done = 0;
   data.forEach(async (item) => {
     await NewsDao.create(item);
