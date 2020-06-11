@@ -24,9 +24,7 @@ const fn = async () => {
 
 const saveToDB = async (data) => {
   console.log("start dbing");
-  console.time("insert db");
   let done = 0;
-  data = [[{ title: "test1", url: "test2", info_from: "test3" }]];
   data.forEach(async (item) => {
     await NewsDao.create(item);
     done++;
