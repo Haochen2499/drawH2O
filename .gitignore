@@ -4,3 +4,4 @@ spider-img/
 
 yarn-error.log
 .DS_Store
+yarn.lock
