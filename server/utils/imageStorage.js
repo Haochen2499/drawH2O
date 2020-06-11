@@ -14,7 +14,7 @@ if (!fs.existsSync(imgDir)) {
 
 const fn = async (url) => {
   const buffer = await timeoutPromise(imageDownload(url));
-  if (buffer === "timeout") {
+  if (!buffer) {
     return null;
   }
   const type = imageType(buffer);
