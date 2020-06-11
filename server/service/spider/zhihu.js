@@ -2,6 +2,7 @@ const cheerio = require("cheerio");
 // const fs = require("fs");
 const fetch = require("../../utils/fetch");
 const imageStorage = require("../../utils/imageStorage");
+const timeoutPromise = require("../../utils/timeoutPromise");
 
 const zhihu = async () => {
   const cookie =
@@ -25,6 +26,6 @@ const zhihu = async () => {
   imgRes.forEach((item, index) => {
     ret[index].cover_url = item;
   });
-  return ret;
+  return timeoutPromise(ret, 5000, []);
 };
 module.exports = zhihu;
