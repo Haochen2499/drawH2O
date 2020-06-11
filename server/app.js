@@ -3,6 +3,7 @@ const logger = require("./middleware/logger");
 const bodyParser = require("koa-bodyparser");
 const router = require("./router/index");
 const static = require("koa-static");
+const compress = require("koa-compress");
 const schedule = require("node-schedule");
 const path = require("path");
 const spiderTask = require("./service/spider/index");
@@ -12,6 +13,7 @@ const port = 9527;
 app.use(logger);
 app.use(bodyParser());
 app.use(router.routes());
+app.use(compress({ threshold: 2048 }));
 app.use(static(path.join(__dirname, "../web/web/dist")));
 app.use(static(path.join(__dirname, "./static")));
 
