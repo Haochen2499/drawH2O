@@ -10,7 +10,7 @@ const NewsDao = require("../../dao/news");
 const fn = async () => {
   console.time("spiderAll");
   const resultList = [];
-  const spiderList = [hupu, toutiao, zhihu, weibo, xiachufang, smzdm];
+  const spiderList = [hupu, toutiao, nga, zhihu, weibo, xiachufang, smzdm];
   spiderList.forEach(async (task) => {
     let res = await task();
     resultList.push(res);
