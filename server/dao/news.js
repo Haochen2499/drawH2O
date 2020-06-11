@@ -11,7 +11,7 @@ module.exports = {
         ret.push(news.save());
       }
     });
-    return await Promise.all(ret);
+    return await Promise.all(ret).catch((e) => console.log(e));
   },
 
   // 获取news列表
