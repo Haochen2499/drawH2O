@@ -23,10 +23,15 @@ module.exports = {
         where: { infoFrom: type },
         offset,
         limit,
+        order: [["createdAt", "DESC"]],
       });
       return { list: rows, count };
     } else {
-      let { count, rows } = await News.findAndCountAll({ offset, limit });
+      let { count, rows } = await News.findAndCountAll({
+        offset,
+        limit,
+        order: [["createdAt", "DESC"]],
+      });
       return { list: rows, count };
     }
   },
