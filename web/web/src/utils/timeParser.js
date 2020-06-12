@@ -2,16 +2,16 @@ import moment from "moment";
 
 export default (time) => {
   const _time = moment(time);
-  const dayTime = 1000 * 60 * 60 * 24;
-  const offset = Math.floor(moment().diff(_time) / dayTime);
+  const hourTime = 1000 * 60 * 60;
+  const offset = Math.floor(moment().diff(_time) / hourTime);
   switch (true) {
     case offset === 0:
-      return "今天";
-    case offset === 1:
-      return "昨天";
-    case offset > 30:
+      return "刚刚";
+    case offset < 24 && offset > 0:
+      return `${offset}小时前`;
+    case offset > 30 * 24:
       return _time.format("MM-DD");
     default:
-      return `${offset}天前`;
+      return `${Math.floor(offset / 24)}天前`;
   }
 };
