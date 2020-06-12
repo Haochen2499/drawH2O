@@ -14,8 +14,14 @@ app.use(logger);
 app.use(bodyParser());
 app.use(router.routes());
 app.use(compress({ threshold: 2048 }));
-app.use(static(path.join(__dirname, "../web/web/dist")));
-app.use(static(path.join(__dirname, "./static")));
+app.use(
+  static(path.join(__dirname, "../web/web/dist"), {
+    maxage: 30 * 24 * 60 * 60 * 1000,
+  })
+);
+app.use(
+  static(path.join(__dirname, "./static"), { maxage: 30 * 24 * 60 * 60 * 1000 })
+);
 
 // 整点跑爬虫任务
 schedule.scheduleJob("0 0 * * * *", function () {
