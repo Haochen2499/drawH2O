@@ -7,7 +7,7 @@
     "spider": "node ./server/service/spider/index -t",
     "spider-test": "node ./server/service/spider/hupu -t",
     "db": "node ./server/db",
-    "test": "node ./server/utils/imageStorage"
+    "test": "node ./server/service/spider/cleaner"
   },
   "author": "",
   "license": "ISC",

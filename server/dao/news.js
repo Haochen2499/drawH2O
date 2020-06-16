@@ -1,4 +1,5 @@
 const News = require("../models/news");
+const Op = require("sequelize").Op;
 
 module.exports = {
   // 新增
@@ -20,7 +21,13 @@ module.exports = {
     const offset = page ? (page - 1) * limit : 0;
     if (type) {
       let { count, rows } = await News.findAndCountAll({
-        where: { infoFrom: type },
+        where: {
+          infoFrom: type,
+          createdAt: {
+            // 只获取5天内的内容
+            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000 * 5),
+          },
+        },
         offset,
         limit,
         order: [["createdAt", "DESC"]],
@@ -28,6 +35,12 @@ module.exports = {
       return { list: rows, count };
     } else {
       let { count, rows } = await News.findAndCountAll({
+        where: {
+          createdAt: {
+            // 只获取5天内的内容
+            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000 * 5),
+          },
+        },
         offset,
         limit,
         order: [["createdAt", "DESC"]],

@@ -7,6 +7,7 @@ const compress = require("koa-compress");
 const schedule = require("node-schedule");
 const path = require("path");
 const spiderTask = require("./service/spider/index");
+const cleanTask = require("./service/spider/cleaner");
 
 const app = new Koa();
 const port = 9527;
@@ -26,6 +27,11 @@ app.use(
 // 整点跑爬虫任务
 schedule.scheduleJob("0 0 * * * *", function () {
   spiderTask();
+});
+
+// 整天清理5天前的爬虫文件夹
+schedule.scheduleJob("* * 0 * * *", function () {
+  cleanTask();
 });
 
 app.listen(port);
