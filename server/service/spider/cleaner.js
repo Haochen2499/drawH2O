@@ -15,6 +15,7 @@ const fn = () => {
     const isExpire =
       fileStat.isDirectory() &&
       moment().diff(moment(name)) > 60 * 60 * 24 * 5 * 1000;
+    console.log("name:", isExpire);
     if (isExpire) {
       deleteFolder(filePath);
     }
