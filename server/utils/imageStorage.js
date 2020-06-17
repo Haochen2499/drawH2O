@@ -6,6 +6,8 @@ const moment = require("moment");
 const timeoutPromise = require("./timeoutPromise");
 
 const time = moment().format("YYYY-MM-DD");
+console.log(moment());
+console.log(time);
 const imgDir = path.join(__dirname, `../static/spider-img/${time}`);
 
 if (!fs.existsSync(imgDir)) {
