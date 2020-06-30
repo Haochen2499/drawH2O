@@ -1,58 +1,22 @@
 <template>
   <div id="app">
-    <layout v-model="isShow">
-      <Header class="header">
-        <p class="site-name">hhc test</p>
-        <div class="right">
-          <Menu
-            mode="horizontal"
-            theme="light"
-            :active-name="activeMenu"
-            @on-select="handleSelectMenu"
-          >
-            <MenuItem :name="1" to="/index">
-              <span>首页</span>
-            </MenuItem>
-            <MenuItem :name="2" to="/about">
-              <span>关于</span>
-            </MenuItem>
-            <MenuItem :name="3" to="/my">
-              <span>我的</span>
-            </MenuItem>
-          </Menu>
-          <div class="user-info">
-            <img src="@assets/logo.png" />
-            <span>1098982341</span>
-          </div>
-        </div>
-      </Header>
-    </layout>
+    <Header></Header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { Layout, Menu, MenuItem } from "view-design";
+import Header from "./components/Header";
 
 export default {
   name: "app",
   components: {
-    Layout,
-    Menu,
-    MenuItem
+    Header
   },
   data() {
-    return {
-      isShow: true,
-      activeMenu: 1
-    };
+    return {};
   },
-  created() {},
-  methods: {
-    handleSelectMenu(val) {
-      console.log(val);
-    }
-  }
+  created() {}
 };
 </script>
 

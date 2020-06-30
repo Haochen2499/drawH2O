@@ -14,7 +14,12 @@ module.exports = {
     },
     port: 8888,
   },
+  productionSourceMap: true,
   lintOnSave: false,
+  configureWebpack: (config) => {
+    //调试JS
+    config.devtool = "source-map";
+  },
   chainWebpack: (config) => {
     config.resolve.alias
       .set("@", resolve("./src"))

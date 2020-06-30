@@ -12,8 +12,13 @@ const fn = async (url) => {
   if (!fs.existsSync(imgDir)) {
     fs.mkdirSync(imgDir);
   }
-
-  const buffer = await timeoutPromise(imageDownload(url));
+  let buffer;
+  try {
+    buffer = await timeoutPromise(imageDownload(url));
+  } catch (e) {
+    console.log("catch err:", e);
+    buffer = null;
+  }
   if (!buffer) {
     return null;
   }

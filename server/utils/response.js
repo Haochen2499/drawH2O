@@ -6,9 +6,8 @@ const response = {
       data,
     };
   },
-  error: (data) => {
-    const dt = data || {};
-    const { code, msg } = dt;
+  error: (data = {}) => {
+    const { code, msg } = data;
     return {
       error_code: code || -1,
       error_msg: msg || "uncatched error",

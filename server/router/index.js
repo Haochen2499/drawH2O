@@ -31,7 +31,6 @@ api.get("/info/get_list", async (ctx) => {
   const { type, page, pageSize } = ctx.query;
   if (!type) {
     ctx.body = resp.error({
-      code: -1,
       msg: "type is required",
     });
     return;
