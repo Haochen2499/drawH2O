@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 
 const uploadDir = path.join(process.cwd(), "./server/static/upload");
-console.log(uploadDir);
 
 const fn = async (file) => {
   const randomNum = new Date().getTime() + Math.floor(Math.random() * 100000);
@@ -16,9 +15,10 @@ const fn = async (file) => {
   const promise = new Promise((res, rej) => {
     ws.on("finish", () => {
       fs.unlinkSync(path);
-      res({ type: "success", path: `/upload/${fileName}` });
+      res({ type: "success", path: `/static/upload/${fileName}` });
     });
-    ws.on("error", () => {
+    ws.on("error", (e) => {
+      console.log(e);
       rej({ type: "failed" });
     });
   });
