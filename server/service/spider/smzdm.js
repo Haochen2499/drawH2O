@@ -1,6 +1,6 @@
 const fetch = require("../../utils/fetch");
 const _ = require("lodash");
-const imageStorage = require("../../utils/imageStorage");
+const imageDownload = require("../../utils/imageDownload");
 
 const smzdm = async () => {
   const url = "https://post.smzdm.com/rank/json_more/?unit=1&p=1";
@@ -15,7 +15,7 @@ const smzdm = async () => {
         url: item.article_url,
         infoFrom: "smzdm",
       });
-      imgTask.push(item.pic_url ? imageStorage(item.pic_url) : null);
+      imgTask.push(item.pic_url ? imageDownload(item.pic_url) : null);
     });
     let imgRes = await Promise.all(imgTask);
     imgRes.forEach((item, index) => {

@@ -10,7 +10,13 @@ module.exports = {
         type: "fail",
       };
     }
-    if (!userName || userName.length > 20) {
+    if (!userName) {
+      return {
+        msg: "请输入用户名",
+        type: "fail",
+      };
+    }
+    if (userName.length > 20) {
       return {
         msg: "用户名长度需小于20个字符",
         type: "fail",

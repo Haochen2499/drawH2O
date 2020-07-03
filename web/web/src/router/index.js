@@ -5,6 +5,8 @@ const index = () =>
 const about = () =>
   import(/* webpackChunkName: "about" */ "@views/about/about.view");
 const my = () => import(/* webpackChunkName: "my" */ "@views/my/my.view");
+const UserInfo = () =>
+  import(/* webpackChunkName: "UserInfo" */ "@views/userInfo/UserInfo.view");
 
 Vue.use(VueRouter);
 
@@ -20,13 +22,18 @@ const routes = [
   },
   {
     path: "/about",
-    name: "about",
+    nae: "about",
     component: about,
   },
   {
     path: "/my",
     name: "my",
     component: my,
+  },
+  {
+    path: "/user_info",
+    name: "UserInfo",
+    component: UserInfo,
   },
 ];
 

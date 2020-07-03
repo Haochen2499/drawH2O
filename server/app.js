@@ -1,5 +1,5 @@
 const Koa = require("koa");
-const bodyParser = require("koa-bodyparser");
+const koaBody = require("koa-body");
 const static = require("koa-static");
 const compress = require("koa-compress");
 const session = require("koa-session");
@@ -32,7 +32,11 @@ const Session = session(session_config, app);
 app.use(Session);
 
 app.use(logger);
-app.use(bodyParser());
+app.use(
+  koaBody({
+    multipart: true,
+  })
+);
 app.use(router.routes());
 app.use(compress({ threshold: 2048 }));
 app.use(

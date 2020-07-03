@@ -1,11 +1,25 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import fetch from "@utils/fetch";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+  state: {
+    userInfo: null,
+  },
+  mutations: {
+    setUserInfo(state, payload) {
+      state.userInfo = payload;
+    },
+  },
+  actions: {
+    async getUserInfo({ commit }) {
+      const res = await fetch.get("/api/user/get");
+      if (res.error_code === 0) {
+        commit("setUserInfo", res.data);
+      }
+    },
+  },
+  modules: {},
 });

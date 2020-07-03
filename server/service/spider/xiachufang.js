@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 const fetch = require("../../utils/fetch");
-const imageStorage = require("../../utils/imageStorage");
+const imageDownload = require("../../utils/imageDownload");
 
 const xiachufang = async () => {
   const urls = [
@@ -23,7 +23,7 @@ const xiachufang = async () => {
           .attr("href")}`,
         infoFrom: "xiachufang",
       });
-      imgTask.push(imgUrl ? imageStorage(imgUrl) : null);
+      imgTask.push(imgUrl ? imageDownload(imgUrl) : null);
     });
   });
   let imgRes = await Promise.all(imgTask);

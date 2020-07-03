@@ -17,7 +17,6 @@ module.exports = {
 
   // 获取news列表
   async getList({ type, page, pageSize }) {
-    console.log(News.findOne);
     const limit = +pageSize || 20;
     const offset = page ? (page - 1) * limit : 0;
     if (type) {

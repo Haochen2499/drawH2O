@@ -1,7 +1,7 @@
 const cheerio = require("cheerio");
 // const fs = require("fs");
 const fetch = require("../../utils/fetch");
-const imageStorage = require("../../utils/imageStorage");
+const imageDownload = require("../../utils/imageDownload");
 const timeoutPromise = require("../../utils/timeoutPromise");
 
 const zhihu = async () => {
@@ -23,7 +23,7 @@ const zhihu = async () => {
         url: $(item).find(".HotItem-content a").attr("href"),
         infoFrom: "zhihu",
       });
-      imgTask.push(imgUrl ? imageStorage(imgUrl) : null);
+      imgTask.push(imgUrl ? imageDownload(imgUrl) : null);
     });
     let imgRes = await Promise.all(imgTask);
     imgRes.forEach((item, index) => {

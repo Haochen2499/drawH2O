@@ -2,7 +2,13 @@ const { sequelize } = require("../db");
 const { Sequelize, Model } = require("sequelize");
 const md5 = require("md5");
 
-class User extends Model {}
+class User extends Model {
+  // 用于获取非敏感信息
+  getUserInfo() {
+    const { id, avatar, userName, email } = this;
+    return { id, avatar, userName, email };
+  }
+}
 
 User.init(
   {

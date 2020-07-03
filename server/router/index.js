@@ -3,6 +3,7 @@ const fs = require("fs");
 const resp = require("../utils/response");
 const newsDao = require("../dao/news");
 const userDao = require("../dao/user");
+const fileStorage = require("../utils/fileStorage");
 
 const render = async (path) => {
   return new Promise((res, rej) => {
@@ -39,17 +40,18 @@ api.get("/info/get_list", async (ctx) => {
   ctx.body = resp.res(res);
 });
 api.post("/user/register", async (ctx) => {
-  const { email, userName, password } = ctx.query;
+  const { email = "", userName = "", password = "" } = ctx.request.body;
   const res = await userDao.register({ email, userName, password });
-  console.log(res);
   if (res.type === "fail") {
     ctx.body = resp.error(res);
   } else {
     ctx.body = resp.res();
+    ctx.session.isLogged = true;
+    ctx.session.userId = res.userId;
   }
 });
 api.post("/user/login", async (ctx) => {
-  const { email, password } = ctx.query;
+  const { email = "", password = "" } = ctx.request.body;
   const res = await userDao.login({ email, password });
   if (res.type === "fail") {
     ctx.body = resp.error(res);
@@ -59,16 +61,65 @@ api.post("/user/login", async (ctx) => {
     ctx.session.userId = res.userId;
   }
 });
+api.get("/user/get", async (ctx) => {
+  const id = ctx.session.userId;
+  const res = await userDao.getUserInfo(id);
+  if (res.type === "fail") {
+    ctx.body = resp.error(res);
+  } else {
+    ctx.body = resp.res(res.data);
+  }
+});
+
+api.post("/user/update", async (ctx) => {
+  const id = ctx.session.userId;
+  const res = await userDao.updateUserInfo(id, ctx.request.body);
+  if (res.type === "success") {
+    ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error();
+  }
+});
+
+api.post("/user/logout", async (ctx) => {
+  const id = ctx.session.userId;
+  if (!id) {
+    ctx.body = resp.error();
+  } else {
+    ctx.session.userId = null;
+    ctx.session.isLogged = false;
+    ctx.body = resp.res();
+  }
+});
+
 api.get("/error", (ctx) => {
-  console.log(ctx.session.views);
   ctx.body = resp.error();
 });
 api.post("/post_obj", async (ctx) => {
   ctx.body = ctx.request.body;
 });
 api.post("/post_form", async (ctx) => {
+  let str = "";
   console.log(ctx.request.body);
   ctx.body = ctx.request.body;
+});
+api.post("/upload/image", async (ctx) => {
+  const file = ctx.request.files.file;
+  if (file) {
+    if (["jpg", "jpeg", "gif"].indexOf(file.type) !== -1) {
+      ctx.body = resp.error({ msg: "图片格式非法" });
+      return;
+    }
+    const res = await fileStorage(file);
+    console.log(res);
+    if (res.type === "success") {
+      ctx.body = resp.res({ url: res.path });
+    } else {
+      ctx.body = resp.error({ msg: "上传失败" });
+    }
+  } else {
+    ctx.body = resp.error({ msg: "必须上传一张图片" });
+  }
 });
 
 const router = new Router();

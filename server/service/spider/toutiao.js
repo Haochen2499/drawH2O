@@ -1,6 +1,6 @@
 const fetch = require("../../utils/fetch");
 const _ = require("lodash");
-const imageStorage = require("../../utils/imageStorage");
+const imageDownload = require("../../utils/imageDownload");
 
 const toutiao = async () => {
   const url =
@@ -17,7 +17,7 @@ const toutiao = async () => {
         infoFrom: "toutiao",
       });
       imgTask.push(
-        item.image_url ? imageStorage(`https:${item.image_url}`) : null
+        item.image_url ? imageDownload(`https:${item.image_url}`) : null
       );
     });
     let imgRes = await Promise.all(imgTask);
