@@ -15,7 +15,7 @@ const fn = async (file) => {
   const promise = new Promise((res, rej) => {
     ws.on("finish", () => {
       fs.unlinkSync(path);
-      res({ type: "success", path: `/static/upload/${fileName}` });
+      res({ type: "success", path: `/upload/${fileName}` });
     });
     ws.on("error", (e) => {
       console.log(e);
