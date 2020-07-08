@@ -1,5 +1,5 @@
 const mailConfig = require("../config").mail;
-const nodeMailer = require("nodeMailer");
+const nodemailer = require("nodemailer");
 
 const { host, port, user, password: pass, userName } = mailConfig;
 
@@ -10,7 +10,7 @@ const params = {
   secure: true,
   auth: { user, pass },
 };
-const transporter = nodeMailer.createTransport(params);
+const transporter = nodemailer.createTransport(params);
 /**
  * @param  {} to
  * @param  {} text=""
