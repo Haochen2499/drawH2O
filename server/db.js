@@ -7,6 +7,12 @@ const sequelize = new Sequelize(database, user, password, {
   port,
   logging: false,
   timezone: "+08:00",
+  define: {
+    charset: "utf8mb4",
+    dialectOptions: {
+      collate: "utf8mb4_unicode_ci",
+    },
+  },
 });
 
 sequelize.sync({ alter: true });
