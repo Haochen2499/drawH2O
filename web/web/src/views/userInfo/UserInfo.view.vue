@@ -8,14 +8,19 @@
           <label class="upload-wrap" for="avatar">
             <div class="upload-text">上传头像</div>
           </label>
-          <input @change="e => handleUpload(e)" type="file" id="avatar" accept=".jpe, .jpeg, .png" />
+          <input
+            @change="e => handleUpload(e)"
+            type="file"
+            id="avatar"
+            accept=".jpe, .jpeg, .png"
+          />
         </div>
         <div class="right">
           <div class="account-info">
             <div class="title">
               <template v-if="!isEditTitle">
                 <p class="title-text">
-                  {{ userInfo.userName || "" }}
+                  {{ _.get(userInfo, "userName") }}
                   <Icon type="md-brush" @click="isEditTitle = true" />
                 </p>
               </template>
@@ -47,6 +52,7 @@ import { Icon, Input } from "view-design";
 import Upload from "@utils/upload";
 import fetch from "@utils/fetch";
 import { mapActions } from "vuex";
+
 export default {
   name: "UserInfo",
   components: { Icon, Input },

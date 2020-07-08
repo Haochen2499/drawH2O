@@ -1,4 +1,4 @@
-const mailConfig = require("./config").mail;
+const mailConfig = require("../config").mail;
 const nodeMailer = require("nodeMailer");
 
 const { host, port, user, password: pass, userName } = mailConfig;
@@ -39,18 +39,4 @@ const sendMail = ({ to, text = "", subject = "", html = "" }) => {
   });
 };
 
-// transporter.sendMail(
-//   {
-//     from: `${userName}<${user}>`,
-//     to: "1098982341@qq.com",
-//     subject: "reset",
-//     text: "here's your reset url: http://www.baidu.com",
-//     html: "<a href='http://www.baidu.com'>testttt</a>",
-//   },
-//   (err, info) => {
-//     console.log("err", err);
-//     console.log("info", info);
-//   }
-// );
-
-module.exports = sendMail;
+module.exports = { sendMail };

@@ -92,6 +92,26 @@ api.post("/user/logout", async (ctx) => {
   }
 });
 
+api.post("/user/get_reset_key", async (ctx) => {
+  const { email = "" } = ctx.request.body;
+  const res = await userDao.getResetKey(email);
+  if (res.type === "success") {
+    ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error(res);
+  }
+});
+
+api.post("/user/reset_password", async (ctx) => {
+  const params = ctx.request.body;
+  const res = await userDao.resetPassword(params);
+  if (res.type === "success") {
+    ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error(res);
+  }
+});
+
 api.get("/error", (ctx) => {
   ctx.body = resp.error();
 });

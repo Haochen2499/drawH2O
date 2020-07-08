@@ -5,5 +5,5 @@ export const INFO_TYPE = [
   { type: "smzdm", name: "什么值得买" },
   { type: "weibo", name: "微博热搜" },
   { type: "xiachufang", name: "下厨房" },
-  { type: "nga", name: "nga" },
+  { type: "nga", name: "NGA" }
 ];

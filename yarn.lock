@@ -1081,6 +1081,11 @@ node-schedule@^1.3.2:
     long-timeout "0.1.1"
     sorted-array-functions "^1.0.0"
 
+nodemailer@^6.4.10:
+  version "6.4.10"
+  resolved "https://registry.npm.taobao.org/nodemailer/download/nodemailer-6.4.10.tgz#f4c8dc7991c57f41fd081bef224ef01f7065143d"
+  integrity sha1-9MjceZHFf0H9CBvvIk7wH3BlFD0=
+
 nth-check@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/nth-check/download/nth-check-1.0.2.tgz#b2bd295c37e3dd58a3bf0700376663ba4d9cf05c"

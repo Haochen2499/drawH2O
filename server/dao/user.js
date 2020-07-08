@@ -1,6 +1,12 @@
 const User = require("../models/user");
-const { validateRegister, validateLogin } = require("../validator/user");
-const objFilter = require("../utils/objFilter");
+const {
+  validateRegister,
+  validateLogin,
+  validateGetResetKey,
+  validateResetPassword,
+} = require("../validator/user");
+const getRandomKey = require("../utils/getRandomKey");
+const { sendMail } = require("../service/mailer");
 
 class userInfo {
   constructor(data) {
@@ -15,15 +21,15 @@ class userInfo {
 module.exports = {
   async register(params) {
     const v = await validateRegister(params);
-    if (v) return v;
     const user = new User(params);
+    if (v) return v;
     await user.save();
     return { type: "success", userId: user.id };
   },
   async login(params) {
-    const v = await validateLogin(params);
-    if (v) return v;
     const user = await User.findOne({ where: { email: params.email } });
+    const v = await validateLogin(params.password, user);
+    if (v) return v;
     return { type: "success", userId: user.id };
   },
   async getUserInfo(id) {
@@ -56,6 +62,36 @@ module.exports = {
       console.log(e);
       return { type: "fail" };
     }
+    return { type: "success" };
+  },
+
+  async getResetKey(email) {
+    const user = await User.findOne({ where: { email } });
+    const v = await validateGetResetKey(user, email);
+    if (v) return v;
+    const resetKey = getRandomKey(4);
+    user.resetKey = resetKey;
+    try {
+      await sendMail({
+        to: email,
+        subject: "重置密码",
+        text: `您的重置密码验证码为 ${resetKey}，有效期为10分钟。如果这并非您本人的操作，请检查账户安全性。`,
+      });
+      await user.save();
+    } catch (e) {
+      console.log(e);
+      res = { type: "fail", msg: "邮件发送失败" };
+    }
+    return { type: "success" };
+  },
+  async resetPassword(params) {
+    const user = await User.findOne({ where: { email: params.email } });
+    const v = await validateResetPassword(user, params);
+    if (v) return v;
+    user.password = params.password;
+    user.resetKey = null;
+    user.resetKeyExpired = null;
+    await user.save();
     return { type: "success" };
   },
 };

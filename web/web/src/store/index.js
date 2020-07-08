@@ -6,12 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userInfo: null,
+    userInfo: null
   },
   mutations: {
     setUserInfo(state, payload) {
       state.userInfo = payload;
-    },
+    }
   },
   actions: {
     async getUserInfo({ commit }) {
@@ -20,6 +20,13 @@ export default new Vuex.Store({
         commit("setUserInfo", res.data);
       }
     },
+    async logout({ commit }) {
+      const res = await fetch.post("/api/user/logout");
+      if (res.error_code === 0) {
+        commit("setUserInfo", null);
+      }
+      return res;
+    }
   },
-  modules: {},
+  modules: {}
 });

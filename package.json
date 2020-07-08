@@ -7,7 +7,7 @@
     "spider": "node ./server/service/spider/index -t",
     "spider-test": "node ./server/service/spider/hupu -t",
     "db": "node ./server/db",
-    "test": "node ./server/service/spider/cleaner"
+    "test": "node ./server/test"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "moment": "^2.26.0",
     "mysql2": "^2.1.0",
     "node-schedule": "^1.3.2",
+    "nodemailer": "^6.4.10",
     "sequelize": "^5.21.12",
     "superagent": "^5.2.2",
     "superagent-charset": "^1.2.0"

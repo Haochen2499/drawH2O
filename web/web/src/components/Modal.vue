@@ -4,7 +4,7 @@
       class="h-modal-wrap"
       v-if="isShow"
       @click.self="closeModal"
-      :style="{ transition: transitionValue, zIndex: 5000 + zIndexOffset }"
+      :style="{ transition: transitionValue, zIndex: 1000 + zIndexOffset }"
       @touchmove="handleScroll"
     >
       <div class="h-modal-content" :style="{ transition: transitionValue }">

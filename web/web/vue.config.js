@@ -9,18 +9,17 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://localhost:9527",
-        changeOrigin: true,
-      },
+        changeOrigin: true
+      }
     },
-    port: 8888,
+    port: 8888
   },
   productionSourceMap: true,
   lintOnSave: false,
-  configureWebpack: (config) => {
-    //调试JS
-    config.devtool = "source-map";
+  configureWebpack: {
+    devtool: "source-map"
   },
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     config.resolve.alias
       .set("@", resolve("./src"))
       .set("@components", resolve("./src/components"))
@@ -28,5 +27,5 @@ module.exports = {
       .set("@utils", resolve("src/utils"))
       .set("@assets", resolve("src/assets"));
     //set第一个参数：设置的别名，第二个参数：设置的路径
-  },
+  }
 };
