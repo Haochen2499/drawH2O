@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 function resolve(dir) {
   return path.join(__dirname, dir); //path.join(__dirname)设置绝对路径
@@ -20,6 +21,7 @@ module.exports = {
     devtool: "source-map"
   },
   chainWebpack: config => {
+    config.devtool("cheap-source-map");
     config.resolve.alias
       .set("@", resolve("./src"))
       .set("@components", resolve("./src/components"))
@@ -27,5 +29,12 @@ module.exports = {
       .set("@utils", resolve("src/utils"))
       .set("@assets", resolve("src/assets"));
     //set第一个参数：设置的别名，第二个参数：设置的路径
+
+    config.plugin("Quill").use(webpack.ProvidePlugin, [
+      {
+        "window.Quill": "quill/dist/quill.js",
+        Quill: "quill/dist/quill.js"
+      }
+    ]);
   }
 };

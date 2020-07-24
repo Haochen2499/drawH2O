@@ -130,7 +130,7 @@ export default {
 @import "../../styles/reset.scss";
 .container {
   background-color: $bg-color;
-  height: calc(100% - 60px);
+  height: 100%;
   overflow: scroll;
   padding: 0 20vw;
   .base-info {

@@ -8,16 +8,6 @@ const {
 const getRandomKey = require("../utils/getRandomKey");
 const { sendMail } = require("../service/mailer");
 
-class userInfo {
-  constructor(data) {
-    const { id, userName, avatar, email } = data;
-    this.id = id;
-    this.userName = userName;
-    this.avatar = avatar;
-    this.email = email;
-  }
-}
-
 module.exports = {
   async register(params) {
     const v = await validateRegister(params);

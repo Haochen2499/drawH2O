@@ -118,7 +118,7 @@ export default {
 .container {
   background-color: #f1f1f1;
   width: 100%;
-  height: calc(100% - 60px);
+  height: 100%;
   padding: 15px 0;
   .wrap {
     margin: 0 auto;

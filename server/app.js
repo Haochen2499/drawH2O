@@ -38,6 +38,7 @@ app.use(
   })
 );
 app.use(router.routes());
+app.use(router.allowedMethods());
 app.use(compress({ threshold: 2048 }));
 app.use(
   static(path.join(__dirname, "../web/web/dist"), {

@@ -1,0 +1,15 @@
+.quill-editor {
+  width: 100%;
+  position: relative;
+  .ql-toolbar {
+    // position: absolute;
+    // top: 0;
+  }
+}
+
+
+.ql-container {
+  min-height: 400px;
+  max-height: 700px;
+  overflow: scroll;
+}

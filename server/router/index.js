@@ -1,28 +1,10 @@
 const Router = require("koa-router");
-const fs = require("fs");
 const resp = require("../utils/response");
 const newsDao = require("../dao/news");
-const userDao = require("../dao/user");
 const fileStorage = require("../utils/fileStorage");
 
-const render = async (path) => {
-  return new Promise((res, rej) => {
-    fs.readFile(path, "utf-8", (err, data) => {
-      if (err) rej(err);
-      if (data) res(data);
-    });
-  });
-};
-
-const idx = new Router();
-idx.get("/", async (ctx) => {
-  ctx.body = await render("./view/index.html");
-});
-
-const order = new Router();
-order.get("/", async (ctx) => {
-  ctx.body = await render("./view/order.html");
-});
+const user = require("./user");
+const article = require("./article");
 
 const api = new Router();
 api.get("/", (ctx) => {
@@ -38,78 +20,6 @@ api.get("/info/get_list", async (ctx) => {
   }
   const res = await newsDao.getList({ type, page, pageSize });
   ctx.body = resp.res(res);
-});
-api.post("/user/register", async (ctx) => {
-  const { email = "", userName = "", password = "" } = ctx.request.body;
-  const res = await userDao.register({ email, userName, password });
-  if (res.type === "fail") {
-    ctx.body = resp.error(res);
-  } else {
-    ctx.body = resp.res();
-    ctx.session.isLogged = true;
-    ctx.session.userId = res.userId;
-  }
-});
-api.post("/user/login", async (ctx) => {
-  const { email = "", password = "" } = ctx.request.body;
-  const res = await userDao.login({ email, password });
-  if (res.type === "fail") {
-    ctx.body = resp.error(res);
-  } else {
-    ctx.body = resp.res();
-    ctx.session.isLogged = true;
-    ctx.session.userId = res.userId;
-  }
-});
-api.get("/user/get", async (ctx) => {
-  const id = ctx.session.userId;
-  const res = await userDao.getUserInfo(id);
-  if (res.type === "fail") {
-    ctx.body = resp.error(res);
-  } else {
-    ctx.body = resp.res(res.data);
-  }
-});
-
-api.post("/user/update", async (ctx) => {
-  const id = ctx.session.userId;
-  const res = await userDao.updateUserInfo(id, ctx.request.body);
-  if (res.type === "success") {
-    ctx.body = resp.res();
-  } else {
-    ctx.body = resp.error();
-  }
-});
-
-api.post("/user/logout", async (ctx) => {
-  const id = ctx.session.userId;
-  if (!id) {
-    ctx.body = resp.error();
-  } else {
-    ctx.session.userId = null;
-    ctx.session.isLogged = false;
-    ctx.body = resp.res();
-  }
-});
-
-api.post("/user/get_reset_key", async (ctx) => {
-  const { email = "" } = ctx.request.body;
-  const res = await userDao.getResetKey(email);
-  if (res.type === "success") {
-    ctx.body = resp.res();
-  } else {
-    ctx.body = resp.error(res);
-  }
-});
-
-api.post("/user/reset_password", async (ctx) => {
-  const params = ctx.request.body;
-  const res = await userDao.resetPassword(params);
-  if (res.type === "success") {
-    ctx.body = resp.res();
-  } else {
-    ctx.body = resp.error(res);
-  }
 });
 
 api.get("/error", (ctx) => {
@@ -144,11 +54,8 @@ api.post("/upload/image", async (ctx) => {
 
 const router = new Router();
 
-const useRouter = (path, route) => {
-  router.use(path, route.routes(), route.allowedMethods());
-};
-useRouter("/", idx);
-useRouter("/order", order);
-useRouter("/api", api);
+router.use("/api", api.routes());
+router.use(article.routes());
+router.use(user.routes());
 
 module.exports = router;

@@ -20,7 +20,6 @@ export default async (file, type = "image") => {
     Message.success("上传成功");
     return res.data.url;
   } else {
-    Message.error(res.error_msg);
     return null;
   }
 };

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header></Header>
-    <router-view></router-view>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -25,6 +27,8 @@ export default {
 #app {
   height: 100vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
 }
 .header {
   display: flex;
@@ -61,5 +65,10 @@ export default {
       }
     }
   }
+}
+.container {
+  width: 100%;
+  height: calc(100vh - 60px);
+  overflow: scroll;
 }
 </style>

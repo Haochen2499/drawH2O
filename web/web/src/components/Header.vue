@@ -1,39 +1,40 @@
 <template>
-  <layout>
-    <div class="header">
-      <p class="site-name">hhc test</p>
-      <div class="right">
-        <Menu mode="horizontal" theme="light">
-          <MenuItem :name="1" to="/index">
-            <span>首页</span>
-          </MenuItem>
-          <MenuItem :name="2" to="/about">
-            <span>关于</span>
-          </MenuItem>
-          <MenuItem :name="3" to="/my">
-            <span>我的</span>
-          </MenuItem>
-        </Menu>
-        <div class="user-info">
-          <template v-if="userInfo">
-            <img :src="imgUrl(userInfo.avatar)" v-if="userInfo.avatar" />
-            <img src="@assets/user/avatar.png" v-else />
-            <Dropdown placement="bottom-end">
-              <span>{{ userInfo.userName }}</span>
-              <DropdownMenu slot="list">
-                <DropdownItem @click.native="$router.push('/user_info')"
-                  >我的</DropdownItem
-                >
-                <DropdownItem @click.native="handleLogout">注销</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </template>
-          <template v-else>
-            <span class="register" @click="showRegisterModal = true"
-              >注册/登录</span
-            >
-          </template>
-        </div>
+  <div class="header">
+    <p class="site-name">hhc test</p>
+    <div class="right">
+      <Menu mode="horizontal" theme="light">
+        <MenuItem :name="1" to="/index">
+          <span>首页</span>
+        </MenuItem>
+        <MenuItem :name="2" to="/about">
+          <span>关于</span>
+        </MenuItem>
+        <MenuItem :name="3" to="/my">
+          <span>我的</span>
+        </MenuItem>
+      </Menu>
+      <div class="user-info">
+        <template v-if="userInfo">
+          <img :src="imgUrl(userInfo.avatar)" v-if="userInfo.avatar" />
+          <img src="@assets/user/avatar.png" v-else />
+          <Dropdown placement="bottom-end">
+            <span>{{ userInfo.userName }}</span>
+            <DropdownMenu slot="list">
+              <DropdownItem @click.native="$router.push('/article/edit')"
+                >写文章</DropdownItem
+              >
+              <DropdownItem @click.native="$router.push('/user_info')"
+                >我的</DropdownItem
+              >
+              <DropdownItem @click.native="handleLogout">注销</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </template>
+        <template v-else>
+          <span class="register" @click="showRegisterModal = true"
+            >注册/登录</span
+          >
+        </template>
       </div>
     </div>
     <h-modal v-model="showRegisterModal">
@@ -136,7 +137,7 @@
         </div>
       </div>
     </h-modal>
-  </layout>
+  </div>
 </template>
 
 <script>
@@ -157,7 +158,6 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "Header",
   components: {
-    Layout,
     Menu,
     MenuItem,
     hModal,
@@ -280,6 +280,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background-color: #f5f7f9;
   .site-name {
     font-weight: bold;
     font-size: 24px;
