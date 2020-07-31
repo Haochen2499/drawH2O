@@ -1,5 +1,6 @@
 const { sequelize } = require("../db");
 const { Sequelize, Model } = require("sequelize");
+const User = require("./user");
 
 class Article extends Model {}
 
@@ -30,10 +31,16 @@ Article.init(
       allowNull: true,
       comment: "封面图片",
     },
-    authorId: {
+    // authorId: {
+    //   type: Sequelize.INTEGER,
+    //   allowNull: false,
+    //   comment: "作者Id",
+    // },
+    view: {
       type: Sequelize.INTEGER,
+      defaultValue: 0,
       allowNull: false,
-      comment: "作者Id",
+      comment: "阅读量",
     },
   },
   {
@@ -42,6 +49,11 @@ Article.init(
     tableName: "article",
   }
 );
+
+Article.belongsTo(User, {
+  foreignKey: "authorId",
+  as: "author",
+});
 
 Article.sync({ alter: true });
 module.exports = Article;

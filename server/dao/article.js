@@ -5,14 +5,29 @@ const {
   validateGet,
 } = require("../validator/article");
 const objFilter = require("../utils/objFilter");
+const User = require("../models/user");
 
 module.exports = {
   // 获取
-  async get(id) {
-    const article = await Article.findOne({ where: { id: id } });
+  async get(id, userId) {
+    const article = await Article.findOne({
+      where: { id },
+      include: [
+        {
+          model: User,
+          attributes: ["id", ["userName", "name"], "avatar"],
+          as: "author",
+        },
+      ],
+    });
     const v = await validateGet(article);
     if (v) return v;
-    return { type: "success", data: article };
+    article.view++;
+    article.save();
+    return {
+      type: "success",
+      data: { article, canEdit: userId === article.authorId },
+    };
   },
   // 新增
   async add(params) {

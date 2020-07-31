@@ -43,22 +43,32 @@
         </div>
       </div>
     </div>
+    <div class="user-content">
+      <Tabs v-model="tabValue">
+        <TabPane label="文章" name="article">
+          <ArticleList :data="articleList"></ArticleList>
+        </TabPane>
+      </Tabs>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { Icon, Input } from "view-design";
+import { Icon, Input, Tabs, TabPane } from "view-design";
 import Upload from "@utils/upload";
 import fetch from "@utils/fetch";
 import { mapActions } from "vuex";
+import ArticleList from "./articleList";
 
 export default {
   name: "UserInfo",
-  components: { Icon, Input },
+  components: { Icon, Input, Tabs, TabPane, ArticleList },
   data() {
     return {
       isEditTitle: "",
+      tabValue: "article",
+      articleList: [],
       form: {
         userName: "",
         avatar: ""
@@ -75,6 +85,7 @@ export default {
       this.form.userName = this.userInfo.userName;
       this.form.avatar = this.userInfo.avatar;
     }
+    this.getArticleList();
   },
   methods: {
     ...mapActions({
@@ -121,6 +132,12 @@ export default {
       const host =
         process.env.NODE_ENV === "development" ? "http://localhost:9527" : "";
       return host + url;
+    },
+    async getArticleList() {
+      const res = await fetch.get("/api/user/articleList");
+      if (res.error_code === 0) {
+        this.articleList = res.data.list;
+      }
     }
   }
 };
@@ -136,14 +153,17 @@ export default {
   .base-info {
     margin-top: 20px;
     .card {
-      width: 80%;
+      width: 100%;
       display: flex;
-      height: 250px;
+      padding: 15px;
+      border-radius: 8px;
       background-color: #fff;
       .left {
         width: 250px;
         height: 250px;
         position: relative;
+        border-radius: 8px;
+        overflow: hidden;
         .avatar {
           width: 100%;
           height: 100%;
@@ -213,6 +233,12 @@ export default {
         }
       }
     }
+  }
+  .user-content {
+    background-color: #fff;
+    margin-top: 10px;
+    padding: 0 20px;
+    border-radius: 8px;
   }
 }
 </style>

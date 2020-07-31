@@ -6,7 +6,8 @@ const article = new Router({ prefix: "/api/article" });
 
 article.get("/get", async (ctx) => {
   const { id } = ctx.query;
-  const res = await articleDao.get(id);
+  const { userId } = ctx.session;
+  const res = await articleDao.get(id, userId);
   if (res.type === "success") {
     ctx.body = resp.res(res.data);
   } else {

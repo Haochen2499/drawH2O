@@ -77,4 +77,10 @@ user.post("/reset_password", async (ctx) => {
   }
 });
 
+user.get("/articleList", async (ctx) => {
+  const { userId } = ctx.session;
+  const res = await userDao.articleList(userId);
+  ctx.body = resp.res(res);
+});
+
 module.exports = user;

@@ -8,12 +8,19 @@
       ></div>
       <div class="article-wrap" :class="{ hasCover: detail.coverUrl }">
         <div class="title-wrap">
-          <p class="title">{{ detail.title }}</p>
-          <div class="subtitle-wrap">
-            <span class="subtitle">{{
-              moment(detail.updateAt).format("YYYY-MM-DD HH:mm")
-            }}</span>
-            <span class="subtitle">作者：{{ detail.authorId }}</span>
+          <div class="left">
+            <p class="title">{{ detail.title }}</p>
+            <div class="subtitle-wrap">
+              <span class="subtitle">{{
+                moment(detail.updateAt).format("YYYY-MM-DD HH:mm")
+              }}</span>
+              <span class="subtitle"
+                >作者：{{ _.get(detail, "author.name") }}</span
+              >
+            </div>
+          </div>
+          <div class="right" v-if="canEdit">
+            <Button type="primary" icon="md-brush">修改</Button>
           </div>
         </div>
         <div class="ql-snow content-container">
@@ -28,14 +35,15 @@
 import fetch from "@utils/fetch";
 import hljs from "highlight.js";
 import moment from "moment";
-import {} from "view-design";
+import { Button } from "view-design";
 
 export default {
   name: "Article",
-  components: {},
+  components: { Button },
   data() {
     return {
-      detail: null
+      detail: null,
+      canEdit: false
     };
   },
   created() {
@@ -56,7 +64,8 @@ export default {
       }
       const res = await fetch.get("/api/article/get", { id });
       if (res.error_code === 0) {
-        this.detail = res.data;
+        this.detail = res.data.article;
+        this.canEdit = res.data.canEdit;
         this.$nextTick(() => this.initHighLight());
       }
     },
@@ -100,6 +109,9 @@ export default {
       padding-bottom: 40px;
       .title-wrap {
         background-color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         .title {
           font-size: 2.3em;
           color: #515a6e;

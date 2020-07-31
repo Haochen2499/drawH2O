@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Article = require("../models/article");
 const {
   validateRegister,
   validateLogin,
@@ -83,5 +84,12 @@ module.exports = {
     user.resetKeyExpired = null;
     await user.save();
     return { type: "success" };
+  },
+  async articleList(authorId) {
+    const { rows, count } = await Article.findAndCountAll({
+      where: { authorId },
+      order: [["createdAt", "DESC"]],
+    });
+    return { list: rows, count };
   },
 };
