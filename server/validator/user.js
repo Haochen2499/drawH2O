@@ -6,7 +6,7 @@ const moment = require("moment");
 module.exports = {
   async validateRegister(params) {
     const { email, userName, password } = params;
-    if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(email)) {
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(email)) {
       return {
         msg: "邮箱格式不合法",
         type: "fail",
