@@ -1,7 +1,6 @@
 const Koa = require("koa");
 const koaBody = require("koa-body");
 const static = require("koa-static");
-const compress = require("koa-compress");
 const session = require("koa-session");
 
 const schedule = require("node-schedule");
@@ -39,7 +38,6 @@ app.use(
 );
 app.use(router.routes());
 app.use(router.allowedMethods());
-app.use(compress({ threshold: 2048 }));
 app.use(
   static(path.join(__dirname, "../web/web/dist"), {
     maxage: 30 * 24 * 60 * 60 * 1000,

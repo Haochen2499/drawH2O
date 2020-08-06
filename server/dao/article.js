@@ -3,6 +3,7 @@ const {
   validateAdd,
   validateModify,
   validateGet,
+  validateDelete,
 } = require("../validator/article");
 const objFilter = require("../utils/objFilter");
 const User = require("../models/user");
@@ -50,6 +51,18 @@ module.exports = {
     } catch (e) {
       console.log(e);
       return { type: "fail", msg: "修改失败" };
+    }
+  },
+  async delete(params) {
+    const article = await Article.findOne({ where: { id: params.id } });
+    const v = await validateDelete(article, params);
+    if (v) return v;
+    try {
+      await article.destroy();
+      return { type: "success" };
+    } catch (e) {
+      console.log(e);
+      return { type: "fail", msg: "删除失败" };
     }
   },
 };

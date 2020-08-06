@@ -37,5 +37,15 @@ article.post("/modify", async (ctx) => {
     ctx.body = resp.error(res);
   }
 });
+article.post("/delete", async (ctx) => {
+  const { userId: authorId } = ctx.session;
+  const params = { ...ctx.request.body, authorId };
+  const res = await articleDao.delete(params);
+  if (res.type === "success") {
+    ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error(res);
+  }
+});
 
 module.exports = article;

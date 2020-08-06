@@ -1,7 +1,7 @@
 import Vue from "vue";
-import { Button, Message } from "view-design";
+import { Message, Modal } from "view-design";
 
-Vue.component("Button", Button);
 Vue.prototype.$Message = Message;
+Vue.prototype.$Modal = Modal;
 
 import "view-design/dist/styles/iview.css";

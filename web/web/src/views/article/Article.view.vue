@@ -19,8 +19,13 @@
               >
             </div>
           </div>
-          <div class="right" v-if="canEdit">
-            <Button type="primary" icon="md-brush">修改</Button>
+          <div class="btn-wrap" v-if="canEdit">
+            <Button type="primary" icon="md-brush" @click="handleEdit"
+              >修改</Button
+            >
+            <Button type="error" icon="md-close" @click="handleDelete"
+              >删除</Button
+            >
           </div>
         </div>
         <div class="ql-snow content-container">
@@ -72,6 +77,24 @@ export default {
     initHighLight() {
       document.querySelectorAll(".ql-syntax").forEach(block => {
         hljs.highlightBlock(block);
+      });
+    },
+    handleEdit() {
+      this.$router.push({ name: "EditArticle", params: this.detail });
+    },
+    handleDelete() {
+      this.$Modal.confirm({
+        title: "确定要删除该文章吗",
+        content: "被删除的文章无法恢复",
+        onOk: async () => {
+          const res = await fetch.post("/api/article/delete", {
+            id: this.detail.id
+          });
+          if (res.error_code === 0) {
+            this.$Message.success("删除成功");
+            this.$router.replace("/user_info");
+          }
+        }
       });
     }
   }
@@ -125,6 +148,11 @@ export default {
         .subtitle {
           color: #999;
           margin-right: 10px;
+        }
+      }
+      .btn-wrap {
+        button {
+          margin-left: 10px;
         }
       }
       .content-container {

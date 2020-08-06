@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: "/about",
-    nae: "about",
+    name: "about",
     component: about
   },
   {

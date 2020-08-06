@@ -22,7 +22,9 @@
           >
             <div class="left">
               <img v-if="item.cover_url" :src="imgUrl(item.cover_url)" />
-              <a :href="item.url" target="_blank">{{ item.title }}</a>
+              <a class="url" :href="newsUrl(item)" target="_blank">
+                {{ item.title }}
+              </a>
             </div>
             <div class="right">
               <span>{{ timeParser(item.createdAt) }}</span>
@@ -101,13 +103,17 @@ export default {
       });
     },
     timeParser,
-    toCDN(url) {
-      return `this.src = 'https://images.weserv.nl/?url=${url}'`;
-    },
     imgUrl(url) {
       const host =
         process.env.NODE_ENV === "development" ? "http://localhost:9527" : "";
       return host + url;
+    },
+    newsUrl(item) {
+      if (item.infoFrom === "huashui") {
+        return `/#/article/${item.id}`;
+      } else {
+        return item.url;
+      }
     }
   }
 };
@@ -157,8 +163,9 @@ export default {
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
-        a {
+        .url {
           color: #333;
+          cursor: pointer;
         }
         .left {
           display: flex;

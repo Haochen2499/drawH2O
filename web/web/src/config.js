@@ -1,5 +1,6 @@
 export const INFO_TYPE = [
   { type: "hupu", name: "虎扑" },
+  { type: "huashui", name: "划水专栏" },
   { type: "toutiao", name: "今日头条" },
   { type: "zhihu", name: "知乎" },
   { type: "smzdm", name: "什么值得买" },

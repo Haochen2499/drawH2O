@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 function resolve(dir) {
   return path.join(__dirname, dir); //path.join(__dirname)设置绝对路径
@@ -18,7 +19,8 @@ module.exports = {
   productionSourceMap: true,
   lintOnSave: false,
   configureWebpack: {
-    devtool: "source-map"
+    devtool: "source-map",
+    plugins: [new CompressionPlugin()]
   },
   chainWebpack: config => {
     config.devtool("cheap-source-map");

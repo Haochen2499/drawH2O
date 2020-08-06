@@ -31,11 +31,11 @@ Article.init(
       allowNull: true,
       comment: "封面图片",
     },
-    // authorId: {
-    //   type: Sequelize.INTEGER,
-    //   allowNull: false,
-    //   comment: "作者Id",
-    // },
+    authorId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      comment: "作者Id",
+    },
     view: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
@@ -49,11 +49,9 @@ Article.init(
     tableName: "article",
   }
 );
-
 Article.belongsTo(User, {
   foreignKey: "authorId",
   as: "author",
 });
 
-Article.sync({ alter: true });
 module.exports = Article;

@@ -44,6 +44,7 @@ import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";
 import ImageResize from "quill-image-resize-module";
 import Upload from "@utils/upload";
 import fetch from "@utils/fetch";
+import _ from "lodash";
 
 Quill.register("modules/ImageExtend", ImageExtend);
 Quill.register("modules/ImageResize", ImageResize);
@@ -54,6 +55,7 @@ export default {
   data() {
     return {
       form: {
+        id: null,
         title: "",
         desc: "",
         content: "",
@@ -89,6 +91,13 @@ export default {
       }
     };
   },
+  created() {
+    const { params } = this.$route;
+    if (!_.isEmpty(params)) {
+      const { id, title, desc, content, coverUrl } = params;
+      Object.assign(this.form, { id, title, desc, content, coverUrl });
+    }
+  },
   methods: {
     imgUrl(url) {
       const host =
@@ -113,10 +122,18 @@ export default {
       }
     },
     async handleSubmit() {
-      const res = await fetch.post("/api/article/add", this.form);
-      if (res.error_code === 0) {
-        this.$Message.success("发布成功");
-        this.$router.push("/user_info");
+      if (this.form.id) {
+        const res = await fetch.post("/api/article/modify", this.form);
+        if (res.error_code === 0) {
+          this.$Message.success("修改成功");
+          this.$router.push("/user_info");
+        }
+      } else {
+        const res = await fetch.post("/api/article/add", this.form);
+        if (res.error_code === 0) {
+          this.$Message.success("发布成功");
+          this.$router.push("/user_info");
+        }
       }
     }
   }

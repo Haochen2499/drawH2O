@@ -53,6 +53,25 @@ module.exports = {
       };
     }
   },
+  async validateDelete(article, params) {
+    const { authorId } = params;
+    if (!authorId) {
+      ctx.body = resp.error({ msg: "请先登录" });
+      return;
+    }
+    if (!article) {
+      return {
+        type: "fail",
+        msg: "文章不存在",
+      };
+    }
+    if (params.authorId !== article.authorId) {
+      return {
+        type: "fail",
+        msg: "您没有修改该文章的权限",
+      };
+    }
+  },
   async validateGet(article) {
     if (!article) {
       return {

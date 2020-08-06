@@ -1,18 +1,14 @@
 <template>
   <div class="header">
-    <p class="site-name">hhc test</p>
-    <div class="right">
+    <div class="left">
+      <img src="@assets/logo.png" class="logo" />
       <Menu mode="horizontal" theme="light">
         <MenuItem :name="1" to="/index">
           <span>首页</span>
         </MenuItem>
-        <MenuItem :name="2" to="/about">
-          <span>关于</span>
-        </MenuItem>
-        <MenuItem :name="3" to="/my">
-          <span>我的</span>
-        </MenuItem>
       </Menu>
+    </div>
+    <div class="right">
       <div class="user-info">
         <template v-if="userInfo">
           <img :src="imgUrl(userInfo.avatar)" v-if="userInfo.avatar" />
@@ -281,10 +277,18 @@ export default {
   align-items: center;
   justify-content: space-between;
   background-color: #f5f7f9;
-  .site-name {
-    font-weight: bold;
-    font-size: 24px;
-    margin-left: 20px;
+  .logo {
+    height: 40px;
+    margin: 0 20px;
+    border-radius: 8px;
+  }
+  .left {
+    display: flex;
+    align-items: center;
+    align-items: center;
+    .ivu-menu-item {
+      background-color: #f5f7f9;
+    }
   }
   .right {
     display: flex;
