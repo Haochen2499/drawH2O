@@ -43,9 +43,14 @@ module.exports = {
     const article = await Article.findOne({ where: { id: params.id } });
     const v = await validateModify(article, params);
     if (v) return v;
-    const _params = objFilter(params, ["title", "content", "desc", "coverUrl"]);
+    const _params = objFilter(params, [
+      "title",
+      "content",
+      "desc",
+      "coverUrl",
+      "isDraft",
+    ]);
     try {
-      console.log("params:", _params);
       await article.update(_params);
       return { type: "success" };
     } catch (e) {

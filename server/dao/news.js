@@ -37,6 +37,7 @@ module.exports = {
       return { list: rows, count };
     } else {
       let { count, rows } = await Article.findAndCountAll({
+        where: { isDraft: false },
         offset,
         limit,
         order: [["updatedAt", "DESC"]],

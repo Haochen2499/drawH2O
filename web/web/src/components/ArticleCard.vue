@@ -1,8 +1,9 @@
 <template>
   <div class="article-card">
     <div class="content">
-      <div class="title" @click="$router.push(`/article/${data.id}`)">
-        {{ data.title }}
+      <div class="title-wrap" @click="$router.push(`/article/${data.id}`)">
+        <p class="title">{{ data.title }}</p>
+        <div v-if="data.isDraft" class="draft">草稿</div>
       </div>
       <div class="desc" v-if="data.desc">{{ data.desc }}</div>
       <div class="bottom-info">
@@ -52,9 +53,24 @@ export default {
   border-bottom: 1px solid #f4f4f4;
   .content {
     flex: 1;
-    .title {
-      font-size: 18px;
-      cursor: pointer;
+    .title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .draft {
+        font-size: 12px;
+        color: #999;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 2px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+      }
     }
     .desc {
       font-size: 12px;

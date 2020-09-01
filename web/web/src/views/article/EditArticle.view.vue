@@ -30,7 +30,10 @@
       :options="editorOption"
     ></quill-editor>
     <div class="bottom">
-      <Button type="primary" @click="handleSubmit">发布</Button>
+      <Button v-if="form.isDraft" type="default" @click="handleSubmit(true)"
+        >存入草稿箱</Button
+      >
+      <Button type="primary" @click="handleSubmit(false)">发布</Button>
     </div>
   </div>
 </template>
@@ -59,7 +62,8 @@ export default {
         title: "",
         desc: "",
         content: "",
-        coverUrl: ""
+        coverUrl: "",
+        isDraft: true
       },
       editorOption: {
         placeholder: "请在这里输入",
@@ -94,8 +98,8 @@ export default {
   created() {
     const { params } = this.$route;
     if (!_.isEmpty(params)) {
-      const { id, title, desc, content, coverUrl } = params;
-      Object.assign(this.form, { id, title, desc, content, coverUrl });
+      const { id, title, desc, content, coverUrl, isDraft } = params;
+      Object.assign(this.form, { id, title, desc, content, coverUrl, isDraft });
     }
   },
   methods: {
@@ -121,7 +125,8 @@ export default {
         this.form.coverUrl = res;
       }
     },
-    async handleSubmit() {
+    async handleSubmit(toDraft) {
+      this.form.isDraft = toDraft;
       if (this.form.id) {
         const res = await fetch.post("/api/article/modify", this.form);
         if (res.error_code === 0) {
@@ -180,5 +185,8 @@ export default {
   display: flex;
   padding: 20px 0;
   justify-content: flex-end;
+  button {
+    margin-left: 10px;
+  }
 }
 </style>

@@ -36,6 +36,12 @@ Article.init(
       allowNull: false,
       comment: "作者Id",
     },
+    isDraft: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      comment: "是否为草稿",
+      defaultValue: false,
+    },
     view: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
@@ -53,5 +59,6 @@ Article.belongsTo(User, {
   foreignKey: "authorId",
   as: "author",
 });
+sequelize.sync({ alter: true });
 
 module.exports = Article;
