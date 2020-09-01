@@ -59,6 +59,6 @@ Article.belongsTo(User, {
   foreignKey: "authorId",
   as: "author",
 });
-sequelize.sync({ alter: true });
+// sequelize.sync({ alter: true });
 
 module.exports = Article;
