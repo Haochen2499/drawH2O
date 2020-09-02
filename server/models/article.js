@@ -55,7 +55,6 @@ Article.init(
     tableName: "article",
   }
 );
-Article.sync({ alter: true });
 Article.belongsTo(User, {
   foreignKey: "authorId",
   as: "author",
