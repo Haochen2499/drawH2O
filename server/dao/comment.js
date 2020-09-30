@@ -60,6 +60,7 @@ module.exports = {
           as: "replyTo",
         },
       ],
+      order: [["createdAt", "ASC"]],
     });
     let comments = [];
     _comments.forEach((item) => {
