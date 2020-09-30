@@ -7,6 +7,7 @@
     "spider": "node ./server/service/spider/index -t",
     "spider-test": "node ./server/service/spider/hupu -t",
     "db": "node ./server/db",
+    "initDB": "node ./server/service/init",
     "test": "node ./server/test"
   },
   "author": "",
