@@ -28,7 +28,7 @@
                 <Icon type="ios-thumbs-up-outline" />
                 <p>{{ item.likes }}</p>
               </div>
-              <div class="btn-item" @click="showReplyInput(item)">
+              <div class="btn-item" @click="showReplyInput(item, item.id)">
                 <Icon type="ios-chatboxes-outline" />
                 <p class="comment">回复</p>
               </div>
