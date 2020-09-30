@@ -9,6 +9,7 @@
 
 <script>
 import Header from "./components/Header";
+import { mapActions } from "vuex";
 
 export default {
   name: "app",
@@ -18,7 +19,14 @@ export default {
   data() {
     return {};
   },
-  created() {}
+  created() {
+    this.getUserInfo();
+  },
+  methods: {
+    ...mapActions({
+      getUserInfo: "getUserInfo"
+    })
+  }
 };
 </script>
 

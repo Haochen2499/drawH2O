@@ -138,7 +138,6 @@
 
 <script>
 import {
-  Layout,
   Menu,
   MenuItem,
   Icon,
@@ -179,9 +178,7 @@ export default {
       getResetKeyText: "获取验证码"
     };
   },
-  created() {
-    this.getUserInfo();
-  },
+  created() {},
   computed: {
     ...mapState({
       userInfo: state => state.userInfo

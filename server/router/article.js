@@ -1,5 +1,6 @@
 const Router = require("koa-router");
 const articleDao = require("../dao/article");
+const commentDao = require("../dao/comment");
 const resp = require("../utils/response");
 
 const article = new Router({ prefix: "/api/article" });
@@ -43,6 +44,38 @@ article.post("/delete", async (ctx) => {
   const res = await articleDao.delete(params);
   if (res.type === "success") {
     ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error(res);
+  }
+});
+
+article.post("/createComment", async (ctx) => {
+  const { userId: creatorId } = ctx.session;
+  const params = { ...ctx.request.body, creatorId };
+  const res = await commentDao.create(params);
+  if (res.type === "success") {
+    ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error(res);
+  }
+});
+
+article.post("/deleteComment", async (ctx) => {
+  const { userId } = ctx.session;
+  const params = { ...ctx.request.body, userId };
+  const res = await commentDao.delete(params);
+  if (res.type === "success") {
+    ctx.body = resp.res();
+  } else {
+    ctx.body = resp.error(res);
+  }
+});
+
+article.get("/getComment", async (ctx) => {
+  const { articleId } = ctx.query;
+  const res = await commentDao.getArticleComment(articleId);
+  if (res.type === "success") {
+    ctx.body = resp.res(res.data);
   } else {
     ctx.body = resp.error(res);
   }

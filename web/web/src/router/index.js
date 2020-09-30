@@ -11,6 +11,7 @@ const EditArticle = () =>
   import(/* webpackChunkName: "Article" */ "@views/article/EditArticle.view");
 const Article = () =>
   import(/* webpackChunkName: "Article" */ "@views/article/Article.view");
+const Test = () => import("@views/test");
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,11 @@ const routes = [
     path: "/article/:id",
     name: "Article",
     component: Article
+  },
+  {
+    path: "/test",
+    name: "Test",
+    component: Test
   }
 ];
 

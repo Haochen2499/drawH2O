@@ -5,7 +5,7 @@
         <div class="left">
           <img :src="imgUrl(form.avatar)" class="avatar" v-if="form.avatar" />
           <img src="@assets/user/avatar.png" class="avatar" v-else />
-          <label class="upload-wrap" for="avatar">
+          <label v-if="canEdit" class="upload-wrap" for="avatar">
             <div class="upload-text">上传头像</div>
           </label>
           <input
@@ -20,8 +20,12 @@
             <div class="title">
               <template v-if="!isEditTitle">
                 <p class="title-text">
-                  {{ _.get(userInfo, "userName") }}
-                  <Icon type="md-brush" @click="isEditTitle = true" />
+                  {{ _.get(detail, "userName") }}
+                  <Icon
+                    type="md-brush"
+                    @click="isEditTitle = true"
+                    v-if="canEdit"
+                  />
                 </p>
               </template>
               <template v-else>
@@ -38,7 +42,7 @@
                 </div>
               </template>
             </div>
-            <p class="mail">{{ userInfo.email }}</p>
+            <p class="mail">{{ _.get(detail, "email") }}</p>
           </div>
         </div>
       </div>
@@ -69,6 +73,9 @@ export default {
       isEditTitle: "",
       tabValue: "article",
       articleList: [],
+      userId: null,
+      canEdit: false,
+      detail: null,
       form: {
         userName: "",
         avatar: ""
@@ -80,10 +87,19 @@ export default {
       userInfo: state => state.userInfo
     })
   },
-  created() {
-    if (this.userInfo) {
-      this.form.userName = this.userInfo.userName;
-      this.form.avatar = this.userInfo.avatar;
+  async created() {
+    const { id } = this.$route.query;
+    if (id) {
+      // 如果有id，则读取id的信息
+      this.userId = +id;
+      await this.initOtherUserInfo();
+    } else {
+      if (this.userInfo) {
+        this.detail = _.cloneDeep(this.userInfo);
+        this.form.userName = this.userInfo.userName;
+        this.form.avatar = this.userInfo.avatar;
+        this.canEdit = true;
+      }
     }
     this.getArticleList();
   },
@@ -91,6 +107,14 @@ export default {
     ...mapActions({
       getUserInfo: "getUserInfo"
     }),
+    async initOtherUserInfo() {
+      const res = await fetch.get("/api/user/get", { id: this.userId });
+      if (res.error_code === 0) {
+        this.detail = _.cloneDeep(res.data);
+        this.form.userName = res.data.userName;
+        this.form.avatar = res.data.avatar;
+      }
+    },
     async handleUpload(e) {
       const file = e.target.files[0];
       const size = file.size / 1024; // 单位 kb
@@ -134,7 +158,7 @@ export default {
       return host + url;
     },
     async getArticleList() {
-      const res = await fetch.get("/api/user/articleList");
+      const res = await fetch.get("/api/user/articleList", { id: this.userId });
       if (res.error_code === 0) {
         this.articleList = res.data.list;
       }

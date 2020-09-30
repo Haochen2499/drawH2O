@@ -31,6 +31,14 @@
         <div class="ql-snow content-container">
           <div class="ql-editor" v-html="detail.content"></div>
         </div>
+        <Divider></Divider>
+        <ReplyArea
+          :data="comments"
+          ref="replyRef"
+          :articleId="articleId"
+          @onRefresh="getComment"
+          :isSelfArticle="canEdit"
+        ></ReplyArea>
       </div>
     </div>
   </div>
@@ -40,22 +48,27 @@
 import fetch from "@utils/fetch";
 import hljs from "highlight.js";
 import moment from "moment";
-import { Button } from "view-design";
+import { Button, Divider } from "view-design";
+import ReplyArea from "./ReplyArea";
 
 export default {
   name: "Article",
-  components: { Button },
+  components: { Button, Divider, ReplyArea },
   data() {
     return {
+      articleId: null,
       detail: null,
-      canEdit: false
+      canEdit: false,
+      comments: []
     };
   },
   created() {
     this.getArticle();
+    this.getComment();
   },
+  computed: {},
   methods: {
-    moment: moment,
+    moment,
     imgUrl(url) {
       const host =
         process.env.NODE_ENV === "development" ? "http://localhost:9527" : "";
@@ -67,11 +80,22 @@ export default {
         this.$$Message.error("文章不存在");
         return;
       }
+      this.articleId = +id;
       const res = await fetch.get("/api/article/get", { id });
       if (res.error_code === 0) {
         this.detail = res.data.article;
         this.canEdit = res.data.canEdit;
         this.$nextTick(() => this.initHighLight());
+      }
+    },
+    async getComment() {
+      const { id: articleId } = this.$route.params;
+      if (!articleId) {
+        return;
+      }
+      const res = await fetch.get("/api/article/getComment", { articleId });
+      if (res.error_code === 0) {
+        this.comments = res.data;
       }
     },
     initHighLight() {

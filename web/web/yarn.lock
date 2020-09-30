@@ -3213,6 +3213,13 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+echarts@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.npm.taobao.org/echarts/download/echarts-4.9.0.tgz#a9b9baa03f03a2a731e6340c55befb57a9e1347d"
+  integrity sha1-qbm6oD8Doqcx5jQMVb77V6nhNH0=
+  dependencies:
+    zrender "4.3.2"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -3247,6 +3254,13 @@ elliptic@^6.0.0, elliptic@^6.5.2:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
+
+emoji-mart-vue@^2.6.6:
+  version "2.6.6"
+  resolved "https://registry.npm.taobao.org/emoji-mart-vue/download/emoji-mart-vue-2.6.6.tgz#afd60da47ff0b59938b3d3cd90dacab6ab0f531e"
+  integrity sha1-r9YNpH/wtZk4s9PNkNrKtqsPUx4=
+  dependencies:
+    postcss-loader "^3.0.0"
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -8666,6 +8680,11 @@ vue-cli-plugin-iview@^2.0.0:
   resolved "https://registry.npm.taobao.org/vue-cli-plugin-iview/download/vue-cli-plugin-iview-2.0.0.tgz#e4f62ebc5056fea4c5b36229e6cbc2f68059863b"
   integrity sha1-5PYuvFBW/qTFs2Ip5svC9oBZhjs=
 
+vue-click-outside@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/vue-click-outside/download/vue-click-outside-1.1.0.tgz#48b7680b518923e701643cccb3e165854aad99eb"
+  integrity sha1-SLdoC1GJI+cBZDzMs+FlhUqtmes=
+
 vue-eslint-parser@^7.0.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.1.0.tgz?cache=0&sync_timestamp=1589539294770&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-7.1.0.tgz#9cdbcc823e656b087507a1911732b867ac101e83"
@@ -9083,3 +9102,8 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+zrender@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.npm.taobao.org/zrender/download/zrender-4.3.2.tgz#ec7432f9415c82c73584b6b7b8c47e1b016209c6"
+  integrity sha1-7HQy+UFcgsc1hLa3uMR+GwFiCcY=

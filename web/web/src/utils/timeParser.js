@@ -1,12 +1,16 @@
 import moment from "moment";
 
-export default (time) => {
+export default (time, showDetail = false) => {
   const _time = moment(time);
   const hourTime = 1000 * 60 * 60;
   const offset = Math.floor(moment().diff(_time) / hourTime);
   switch (true) {
     case offset === 0:
-      return "刚刚";
+      if (showDetail) {
+        return _time.format("HH:MM");
+      } else {
+        return "刚刚";
+      }
     case offset < 24 && offset > 0:
       return `${offset}小时前`;
     case offset > 30 * 24:

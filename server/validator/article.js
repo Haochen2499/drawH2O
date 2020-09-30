@@ -25,8 +25,10 @@ module.exports = {
   async validateModify(article, params) {
     const { authorId, title, content } = params;
     if (!authorId) {
-      ctx.body = resp.error({ msg: "请先登录" });
-      return;
+      return {
+        msg: "请先登录",
+        type: "fail",
+      };
     }
     if (!article) {
       return {
@@ -56,8 +58,10 @@ module.exports = {
   async validateDelete(article, params) {
     const { authorId } = params;
     if (!authorId) {
-      ctx.body = resp.error({ msg: "请先登录" });
-      return;
+      return {
+        msg: "请先登录",
+        type: "fail",
+      };
     }
     if (!article) {
       return {

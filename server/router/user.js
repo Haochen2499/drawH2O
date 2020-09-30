@@ -27,7 +27,7 @@ user.post("/login", async (ctx) => {
   }
 });
 user.get("/get", async (ctx) => {
-  const id = ctx.session.userId;
+  const id = ctx.query.id || ctx.session.userId;
   const res = await userDao.getUserInfo(id);
   if (res.type === "fail") {
     ctx.body = resp.error(res);
@@ -78,7 +78,7 @@ user.post("/reset_password", async (ctx) => {
 });
 
 user.get("/articleList", async (ctx) => {
-  const { userId } = ctx.session;
+  const userId = ctx.query.id || ctx.session.userId;
   const res = await userDao.articleList(userId);
   ctx.body = resp.res(res);
 });

@@ -10,6 +10,8 @@
   "dependencies": {
     "compression-webpack-plugin": "^4.0.0",
     "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
+    "emoji-mart-vue": "^2.6.6",
     "highlight.js": "^10.1.1",
     "node-sass": "^4.14.1",
     "quill-image-extend-module": "^1.1.2",
@@ -17,6 +19,7 @@
     "sass-loader": "^8.0.2",
     "view-design": "^4.0.0",
     "vue": "^2.6.11",
+    "vue-click-outside": "^1.1.0",
     "vue-lazyload": "^1.3.3",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.2.0",

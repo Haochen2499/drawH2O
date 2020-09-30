@@ -6,6 +6,7 @@
       :key="item.id"
       :data="item"
     ></ArticleCard>
+    <div v-if="!data.length" class="no-info">什么都没有哦</div>
   </div>
 </template>
 
@@ -43,6 +44,11 @@ export default {
   }
   .title {
     cursor: pointer;
+  }
+  .no-info {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
   }
 }
 </style>
