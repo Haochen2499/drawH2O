@@ -2,7 +2,7 @@ node_modules
 
 /server/static/spider-img/*
 /server/static/upload/*
-/server/config
+/server/config.js
 
 yarn-error.log
 .DS_Store
