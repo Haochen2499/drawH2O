@@ -2,15 +2,15 @@ module.exports = {
   database: {
     host: "localhost",
     user: "root",
-    password: "        ",
-    database: "main",
+    password: "YOUR PASSWORD",
+    database: "YOUR DATABASE",
     port: 3306,
   },
   mail: {
-    host: "smtp.exmail.qq.com",
+    host: "YOUR HOST",
     port: 465,
-    user: "noreply@drawh2o.today",
-    password: "Drawh2o",
+    user: "YOUR USER",
+    password: "YOUR PWD",
     userName: "每日划水",
   },
 };

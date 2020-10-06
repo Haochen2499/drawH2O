@@ -7,9 +7,6 @@ const user = require("./user");
 const article = require("./article");
 
 const api = new Router();
-api.get("/", (ctx) => {
-  ctx.body = resp.res({ name: "hhc" });
-});
 api.get("/info/get_list", async (ctx) => {
   const { type, page, pageSize } = ctx.query;
   if (!type) {
@@ -20,18 +17,6 @@ api.get("/info/get_list", async (ctx) => {
   }
   const res = await newsDao.getList({ type, page, pageSize });
   ctx.body = resp.res(res);
-});
-
-api.get("/error", (ctx) => {
-  ctx.body = resp.error();
-});
-api.post("/post_obj", async (ctx) => {
-  ctx.body = ctx.request.body;
-});
-api.post("/post_form", async (ctx) => {
-  let str = "";
-  console.log(ctx.request.body);
-  ctx.body = ctx.request.body;
 });
 api.post("/upload/image", async (ctx) => {
   const file = ctx.request.files.file;

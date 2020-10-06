@@ -10,7 +10,7 @@
     "initDB": "node ./server/service/init",
     "test": "node ./server/test"
   },
-  "author": "",
+  "author": "haochen",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
