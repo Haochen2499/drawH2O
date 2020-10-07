@@ -158,7 +158,9 @@ export default {
       return host + url;
     },
     async getArticleList() {
+      this.$Loading.start();
       const res = await fetch.get("/api/user/articleList", { id: this.userId });
+      this.$Loading.finish();
       if (res.error_code === 0) {
         this.articleList = res.data.list;
       }
@@ -263,6 +265,9 @@ export default {
     margin-top: 10px;
     padding: 0 20px;
     border-radius: 8px;
+    /deep/ .ivu-tabs-bar {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

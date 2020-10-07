@@ -10,6 +10,7 @@
 <script>
 import Header from "./components/Header";
 import { mapActions } from "vuex";
+import Cookie from "js-cookie";
 
 export default {
   name: "app",
@@ -20,7 +21,14 @@ export default {
     return {};
   },
   created() {
-    this.getUserInfo();
+    if (this.isLogin) {
+      this.getUserInfo();
+    }
+  },
+  computed: {
+    isLogin() {
+      return !!Cookie.get("isLogin");
+    }
   },
   methods: {
     ...mapActions({

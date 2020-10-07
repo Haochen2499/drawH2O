@@ -13,6 +13,7 @@
     "echarts": "^4.9.0",
     "emoji-mart-vue": "^2.6.6",
     "highlight.js": "^10.1.1",
+    "js-cookie": "^2.2.1",
     "node-sass": "^4.14.1",
     "quill-image-extend-module": "^1.1.2",
     "quill-image-resize-module": "^3.0.0",

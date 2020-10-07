@@ -48,7 +48,7 @@ export default {
 .article-card {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 15px;
+  padding: 5px 0;
   margin: 0 15px;
   border-bottom: 1px solid #f4f4f4;
   .content {

@@ -21,6 +21,7 @@ user.post("/login", async (ctx) => {
   if (res.type === "fail") {
     ctx.body = resp.error(res);
   } else {
+    ctx.cookies.set("isLogin", 1, { httpOnly: false });
     ctx.body = resp.res();
     ctx.session.isLogged = true;
     ctx.session.userId = res.userId;
@@ -51,6 +52,7 @@ user.post("/logout", async (ctx) => {
   if (!id) {
     ctx.body = resp.error();
   } else {
+    ctx.cookies.set("isLogin", null);
     ctx.session.userId = null;
     ctx.session.isLogged = false;
     ctx.body = resp.res();

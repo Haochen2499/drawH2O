@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import fetch from "@utils/fetch";
+import Cookie from "js-cookie";
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
       const res = await fetch.post("/api/user/logout");
       if (res.error_code === 0) {
         commit("setUserInfo", null);
+        Cookie.remove("login");
       }
       return res;
     }
