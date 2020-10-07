@@ -8,7 +8,7 @@
       <div class="desc" v-if="data.desc">{{ data.desc }}</div>
       <div class="bottom-info">
         <Icon type="ios-clock" class="icon"></Icon>
-        <span>{{ moment(data.updatedAt).format("YYYY-MM-DD") }}</span>
+        <span>{{ moment(data.createdAt).format("YYYY-MM-DD") }}</span>
         <Icon type="ios-eye" class="icon"></Icon>
         <span>{{ data.view }}</span>
       </div>

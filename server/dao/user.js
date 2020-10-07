@@ -89,6 +89,7 @@ module.exports = {
     const { rows, count } = await Article.findAndCountAll({
       where: { authorId },
       order: [["createdAt", "DESC"]],
+      attributes: { exclude: ["content"] },
     });
     return { list: rows, count };
   },
