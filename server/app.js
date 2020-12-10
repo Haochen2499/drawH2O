@@ -48,7 +48,7 @@ app.use(
 );
 
 // 整点跑爬虫任务
-schedule.scheduleJob("0 0 * * * *", function () {
+schedule.scheduleJob("0 */20 * * * *", function () {
   spiderTask();
 });
 
