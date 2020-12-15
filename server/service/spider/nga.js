@@ -1,5 +1,3 @@
-const sa = require("superagent");
-require("superagent-charset")(sa);
 const axios = require("axios");
 const iconv = require("iconv-lite");
 
@@ -41,6 +39,7 @@ const nga = async () => {
       });
     });
   }
+  console.log(ret);
   return ret;
 };
 
